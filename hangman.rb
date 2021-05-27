@@ -6,12 +6,11 @@ class Hangman
       @letters = ('a'..'z').to_a
       @word = words.sample
       @lives = 7
-      @correct_guesses = []
       @word_teaser = ""
   
 
             @word.first.size.times do
-        word_teaser += "_ "
+         @word_teaser += "_ "
       end
     end
 
@@ -26,7 +25,7 @@ class Hangman
     end
 
     def print_teaser last_guess = nil
-      update_teaser unless last_guess.nil?
+      update_teaser(last_guess) unless last_guess.nil?
       puts @word_teaser
     end
 
@@ -36,10 +35,12 @@ class Hangman
 
       new_teaser.each_with_index do |letter, index |
         #replace blank values with letter if it matches in word
-        if letter == "_" && @word.first.split[index] == last_guess
+        if letter == "_" && @word.first[index] == last_guess
           new_teaser[index] = last_guess
         end
       end
+
+      @word_teaser = new_teaser.join(" ")
     end
 
     def make_guess
@@ -50,16 +51,19 @@ class Hangman
       #if letters is not part of the word remove from the array
       good_guess = @word.first.include? guess
 
-      if good_guess
+      if guess == "exit"
+        puts "Thank you for playing"
+      elsif good_guess
         puts "You are correct!"
 
-        @correct_guesses << guess
-
-        #remove the guess form the array alphabet
-        @letters.delete guess
-
         print_teaser guess
+
+        if @word.first == @word_teaser.split.join
+          puts "Congratualtions... You have won the game"
+        else
+
         make_guess
+        end
       else
         @lives -= 1
         puts "Sorry ...you have #{@lives} lives remaining. Try again"
@@ -72,6 +76,7 @@ class Hangman
     def begin
       #ask user for a letter
       puts "New game has started...Your word is #{words.last.size} characters long"
+      puts "To exit game at any pont type 'exit'"
       print_teaser
 
       puts "Clue: #{@word.last}"
