@@ -26,15 +26,20 @@ class Hangman
     end
 
     def print_teaser last_guess = nil
-      word_teaser = ""
-
       update_teaser unless last_guess.nil?
-
-      puts word_teaser
+      puts @word_teaser
     end
 
-    def update_teaser
-      
+    def update_teaser last_guess
+
+      new_teaser = @word_teaser.split
+
+      new_teaser.each_with_index do |letter, index |
+        #replace blank values with letter if it matches in word
+        if letter == "_" && @word.first.split[index] == last_guess
+          new_teaser[index] = last_guess
+        end
+      end
     end
 
     def make_guess
