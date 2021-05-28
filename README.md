@@ -1,6 +1,6 @@
 # Hangman
 
-This command line game was built to practice Ruby and various inbuilt functions. The applicaiton runs in the users terminal and allows the user to play the game by guessing letters to solve the puzzle.
+This command-line game was built to practice Ruby and various inbuilt functions. The application runs in the user's terminal and allows the user to play the game by guessing letters to solve the puzzle.
 
 ---
 
